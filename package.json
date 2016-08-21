@@ -1,0 +1,18 @@
+{
+  "name": "to-n2k",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "tjk@iki.fi",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "concentrate": "^0.2.3"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  }
+}
