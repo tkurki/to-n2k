@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^3.5.0",
-    "concentrate": "^0.2.3"
+    "concentrate": "tkurki/concentrate#bitfields"
   },
   "devDependencies": {
     "mocha": "^3.0.2"
