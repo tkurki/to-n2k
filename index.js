@@ -30,6 +30,12 @@ function toPgn(data) {
         } else {
           acc.uint16(isDefined(value) ? value : 65535)
         }
+      } else if (field.BitLength === 32) {
+        if (field.Signed) {
+          acc.int32(isDefined(value) ? value : 2147483647)
+        } else {
+          acc.uint32(isDefined(value) ? value : 4294967295)
+        }
       } else if (field.BitLength < 8) {
         acc.tinyInt(isDefined(value) ? value : 255, field.BitLength)
       }
