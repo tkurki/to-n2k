@@ -15,6 +15,9 @@ function toPgn(data) {
       if (isDefined(value) && field.Resolution) {
         value = (value / field.Resolution).toFixed(0);
       }
+      if (field.EnumValues) {
+        value = lookup(field, value)
+      }
       if (field.BitLength === 8) {
         if (field.Signed) {
           acc.int8(isDefined(value) ? value : 127)
@@ -28,7 +31,7 @@ function toPgn(data) {
           acc.uint16(isDefined(value) ? value : 65535)
         }
       } else if (field.BitLength < 8) {
-        acc.tinyInt(isDefined(value) ? lookup(field, value) : 255, field.BitLength)
+        acc.tinyInt(isDefined(value) ? value : 255, field.BitLength)
       }
       return acc
   }, Concentrate()).result()
