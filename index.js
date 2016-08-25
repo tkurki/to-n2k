@@ -10,37 +10,40 @@ function toPgn(data) {
     return
   }
 
-  return pgnData.Fields.reduce(function(acc, field) {
-      var value = data[field.Name];
-      if (isDefined(value) && field.Resolution) {
-        value = (value / field.Resolution).toFixed(0);
-      }
-      if (field.EnumValues) {
+  var result = pgnData.Fields.reduce(function(acc, field) {
+    var value = data[field.Name];
+    if (isDefined(value) && field.Resolution) {
+      value = (value / field.Resolution).toFixed(0);
+    }
+    if (field.EnumValues) {
+      if (!(field.Id === "timeStamp" && value < 60)) {
         value = lookup(field, value)
       }
-      if (field.BitLength === 8) {
-        if (field.Signed) {
-          acc.int8(isDefined(value) ? value : 127)
-        } else {
-          acc.uint8(isDefined(value) ? value : 255)
-        }
-      } else if (field.BitLength === 16) {
-        if (field.Signed) {
-          acc.int16(isDefined(value) ? value : 32767)
-        } else {
-          acc.uint16(isDefined(value) ? value : 65535)
-        }
-      } else if (field.BitLength === 32) {
-        if (field.Signed) {
-          acc.int32(isDefined(value) ? value : 2147483647)
-        } else {
-          acc.uint32(isDefined(value) ? value : 4294967295)
-        }
-      } else if (field.BitLength < 8) {
-        acc.tinyInt(isDefined(value) ? value : 255, field.BitLength)
+    }
+    if (field.BitLength === 8) {
+      if (field.Signed) {
+        acc.int8(isDefined(value) ? value : 127)
+      } else {
+        acc.uint8(isDefined(value) ? value : 255)
       }
-      return acc
+    } else if (field.BitLength === 16) {
+      if (field.Signed) {
+        acc.int16(isDefined(value) ? value : 32767)
+      } else {
+        acc.uint16(isDefined(value) ? value : 65535)
+      }
+    } else if (field.BitLength === 32) {
+      if (field.Signed) {
+        acc.int32(isDefined(value) ? value : 2147483647)
+      } else {
+        acc.uint32(isDefined(value) ? value : 4294967295)
+      }
+    } else {
+      acc.tinyInt(isDefined(value) ? value : 255, field.BitLength)
+    }
+    return acc
   }, Concentrate()).result()
+  return result
 }
 
 function lookup(field, stringValue) {
