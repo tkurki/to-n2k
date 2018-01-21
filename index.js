@@ -16,7 +16,7 @@ function toPgn(data) {
     if (isDefined(value) && field.Resolution) {
       value = (value / field.Resolution).toFixed(0);
     }
-    if (field.EnumValues) {
+    if (field.EnumValues && _.isString(value)) {
       if (!(field.Id === "timeStamp" && value < 60)) {
         value = lookup(field, value)
       }
