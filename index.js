@@ -1,5 +1,6 @@
-const Concentrate = require('concentrate')
+const Concentrate2 = require('concentrate2')
 const pgns = require('./pgns')
+const _ = require('lodash')
 const pgn127250 = pgns.PGNs['127250']
 
 
@@ -20,6 +21,7 @@ function toPgn(data) {
         value = lookup(field, value)
       }
     }
+
     if (field.BitLength === 8) {
       if (field.Signed) {
         acc.int8(isDefined(value) ? value : 127)
@@ -42,7 +44,7 @@ function toPgn(data) {
       acc.tinyInt(isDefined(value) ? value : 255, field.BitLength)
     }
     return acc
-  }, Concentrate()).result()
+  }, Concentrate2()).result()
   return result
 }
 
